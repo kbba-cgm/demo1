@@ -1,7 +1,12 @@
 package com.ojt.demo1.web.controller;
 
+import com.ojt.demo1.bl.service.MyUserRepository;
+import com.ojt.demo1.persistance.entity.MyUser;
 import com.ojt.demo1.web.form.RegisterUserForm;
 import com.ojt.demo1.web.form.UserForm;
+import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class HomeController {
     public List<RegisterUserForm> userList = new ArrayList<>();
+
+    @Autowired
+    MyUserRepository myUserRepository;
     // this list is for storing data (DB)
 
     @RequestMapping("/")
@@ -51,7 +60,7 @@ public class HomeController {
     @GetMapping("/user/create")
     // RESTful naming
     public String createUser(Model model) {
-        var user = new RegisterUserForm();
+        var user = new MyUser();
         List<String> cities = new ArrayList<>();
         cities.add("Yangon");
         cities.add("Mandalay");
@@ -62,18 +71,23 @@ public class HomeController {
     }
 
     @PostMapping("/user/create")
-    public String registerUser(@ModelAttribute RegisterUserForm registerUserForm, Model model) {
-//        System.out.println("user name --> " + registerUserForm.getUsername());
-//        System.out.println("ph no. --> " + registerUserForm.getPhoneNumber());
-//        System.out.println("married? --> " + registerUserForm.isMarried());
-        userList.add(registerUserForm);
+    public String registerUser(@ModelAttribute MyUser user, Model model) {
+//        System.out.println("user name --> " + user.getUsername());
+//        System.out.println("ph no. --> " + user.getPhoneNumber());
+//        System.out.println("married? --> " + user.getMarried());
+
 //        for (var user : userList) {
 //            System.out.println("-----------------------------------");
 //            System.out.println("user name : " + user.getUsername());
 //            System.out.println("user ph no : " + user.getPhoneNumber());
 //            System.out.println("-----------------------------------");
 //        }
-        model.addAttribute("userList", userList);
+
+//        userList.add(registerUserForm);
+//        save in db
+        // query ? session ? sessionFactory
+//        model.addAttribute("userList", userList);
+        myUserRepository.save(user);
 
 //        System.out.println("user creation****");
         return "user/detail";
