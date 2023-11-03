@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome Home!!!!</h1>
+    <tr th:each="user : ${userList}">
+        <td th:text="${user.username}">default name</td>
+        <td th:text="${user.age}">Default age - 18</td>
+<!--       gender => 1,2 (X)
+                        1 -> male, 2 -> female -->
+<!--        married => true, false (X)
+                        true -> married, false -> single -->
+        <br>
+        <td th:text="#{messages.hello}">Default age - 18</td>
+        <br>
+    </tr>
+</body>
+</html>
