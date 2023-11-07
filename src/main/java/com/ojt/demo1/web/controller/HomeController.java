@@ -1,6 +1,10 @@
 package com.ojt.demo1.web.controller;
 
+import com.ojt.demo1.bl.service.AuthorRepository;
+import com.ojt.demo1.bl.service.BookRepository;
 import com.ojt.demo1.bl.service.MyUserRepository;
+import com.ojt.demo1.persistance.entity.Author;
+import com.ojt.demo1.persistance.entity.Book;
 import com.ojt.demo1.persistance.entity.MyUser;
 import com.ojt.demo1.web.form.RegisterUserForm;
 import com.ojt.demo1.web.form.UserForm;
@@ -24,6 +28,10 @@ public class HomeController {
     @Autowired
     MyUserRepository myUserRepository;
     // this list is for storing data (DB)
+    @Autowired
+    BookRepository bookRepository;
+    @Autowired
+    AuthorRepository authorRepository;
 
     @RequestMapping("/")
 //    @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -153,5 +161,20 @@ public class HomeController {
 //        model.addAttribute("user", user);
 //        model.addAttribute("cities", cities);
         return "user/profile";
+    }
+
+    @GetMapping("/book/create")
+    public void createBook() {
+        Author author1 = new Author();
+        author1.setName("Author 1");
+        authorRepository.save(author1);
+
+        Book book1 = new Book();
+        book1.setAuthor(author1);
+        book1.setTitle("Book One Title");
+        book1.setBody("Book One Body");
+
+        bookRepository.save(book1);
+        System.out.println("book is saved ************");
     }
 }
