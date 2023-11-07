@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -93,4 +94,64 @@ public class HomeController {
         return "user/detail";
     }
 
+    @GetMapping("/user/profile")
+    public String getUser(Model model) {
+//        var myUser = new MyUser();
+//        myUser.setUsername("Fake user");
+//        try{
+//            MyUser myUser =  myUserRepository.findById(userId).get();
+//            model.addAttribute("user", myUser);
+//        } catch (Exception e) {
+//            model.addAttribute("error", "there is no User");
+//        }
+        List<MyUser> userList = myUserRepository.findByCity("Mandalay");
+        model.addAttribute("userList", userList);
+        return "user/profile";
+    }
+
+
+    @GetMapping("/user/edit/{userId}")
+    // RESTful naming
+    public String editUser(Model model, @PathVariable Long userId) {
+//        var user = new MyUser();
+        MyUser user =  myUserRepository.findById(userId).get();
+        List<String> cities = new ArrayList<>();
+        cities.add("Yangon");
+        cities.add("Mandalay");
+        cities.add("MawlaMyaing");
+        model.addAttribute("user", user);
+        model.addAttribute("cities", cities);
+        return "user/edit";
+    }
+
+    @PostMapping("/user/update")
+    public String updateUser(@ModelAttribute MyUser user, Model model) {
+//        var user = new MyUser();
+        myUserRepository.save(user);
+//        myUserRepository.update(user);
+//        List<String> cities = new ArrayList<>();
+//        cities.add("Yangon");
+//        cities.add("Mandalay");
+//        cities.add("MawlaMyaing");
+//        model.addAttribute("user", user);
+//        model.addAttribute("cities", cities);
+        return "user/profile";
+    }
+
+    @GetMapping("/user/delete/{userId}")
+    public String removeUser(@PathVariable Long userId) {
+//        var user = new MyUser();
+        myUserRepository.deleteById(userId);
+
+//        var myUser =  myUserRepository.findById(userId).get();
+//        myUserRepository.delete(myUser);
+//        myUserRepository.update(user);
+//        List<String> cities = new ArrayList<>();
+//        cities.add("Yangon");
+//        cities.add("Mandalay");
+//        cities.add("MawlaMyaing");
+//        model.addAttribute("user", user);
+//        model.addAttribute("cities", cities);
+        return "user/profile";
+    }
 }

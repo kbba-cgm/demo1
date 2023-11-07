@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
     <h1>Profile page</h1>
+<!--    <div th:text="${error}"></div>-->
+<!--    <span th:if="${user != null}">-->
+<!--    &lt;!&ndash; null.username &ndash;&gt;-->
+<!--        <div th:text="${user.username}"></div>-->
+<!--        <div th:text="${user.phoneNumber}"></div>-->
+<!--        <div th:text="${user.gender}"></div>-->
+<!--        <div th:text="${user.city}"></div>-->
+<!--    </span>-->
+    <div th:each="user : ${userList}">
+        user name : <span th:text="${user.username}"></span> |
+        phone number: <span th:text="${user.phoneNumber}"></span> |
+        user gender : <span th:text="${user.gender}"></span> |
+        user married status : <span th:text="${user.married}"></span> |
+        city : <span th:text="${user.city}"></span>
+        <br>
+    </div>
 </body>
+
 </html>

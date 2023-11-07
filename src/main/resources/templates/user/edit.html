@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Create</title>
+</head>
+<body>
+<h1>User Registration</h1>
+<!--    th:action="@{/}"-->
+<form th:action="@{/user/update}" method="post" th:object="${user}">
+    <label>Username:</label>
+    <input type="hidden" th:field="*{id}" />
+    <input type="text" th:field="*{username}" /><br/>
+
+    <label>Phone Number:</label>
+    <input type="number" th:field="${user.phoneNumber}" /><br/>
+
+    <label>Gender:</label>
+    <input type="radio" th:field="*{gender}" value="1" />Male
+    <input type="radio" th:field="*{gender}" value="2" />Female<br/>
+
+    <label>Profession:</label>
+    <select th:field="*{city}">
+        <option th:each="c : ${cities}" th:value="${c}" th:text="${c}" />
+    </select>
+    <br/>
+
+    <label>Married?</label>
+    <input type="checkbox" th:field="*{married}" /><br/>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
